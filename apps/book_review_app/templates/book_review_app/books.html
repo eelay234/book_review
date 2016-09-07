@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>Books</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   {% load staticfiles %}
+   <link rel="stylesheet" href="{% static 'book_review_app/css/styles.css' %}">
+</head>
+<body>
+  <div class="main">
+    <div class="first3">
+      <h1 class="title">Welcome, {{ request.session.user_name }}</h1>
+      <a href="/books/add/" class="a_mright">Add book and review</a>
+      <a href="/logoff"  class="a_right">Log off</a>
+      <h3>Recent book reviews</h3>
+      {% for review in reviews_first3 %}
+        <p><a href="/lookup_book/{{review.book_id.id}}/{{ request.session.user_id}}">{{ review.book_id.title }}</a></p>
+        <p id="stars{{ review.id}}">
+            <script>
+            var count = {{ review.rating }}
+            var s="";
+            for (var i=0; i < count; i++) {
+              s += "*";
+            }
+            document.getElementById("stars{{ review.id }}").innerHTML=s;
+            //document.write = "*";
+            </script>
+        </p>
+        <p><a href="/users/{{ review.user_id.id}}/">{{ review.user_id.alias }}</a> said {{ review.message }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="other">
+      <h3>Other book reviews</h3>
+      <div style="overflow:scroll; height:300px;">
+        {% for review in review_others %}
+          <p><a href="/lookup_book/{{review.book_id.id}}/">{{ review.book_id.title }}</a></p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

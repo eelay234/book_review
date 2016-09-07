@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>User Page</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   {% load staticfiles %}
+   <link rel="stylesheet" href="{% static 'book_review_app/css/styles.css' %}">
+</head>
+<body>
+  <div class="main">
+    <a href="/logoff" class="r">Log off</a>
+    <a href="/books/" class="mr">Home</a>
+    <a href="/books/add/" class="r">Add book and review</a>
+    <div class="container user_block">
+      <p>Alias: {{ user.alias }}</p>
+      <p>User name: {{ user.name }}</p>
+      <p>email: {{ user.email }}</p>
+      <p>Total Reviews: {{ count }}</p>
+
+      <p>Posted reviews on the following books:</p>
+      <ul>
+      {% for book in books %}
+        <li><a href="/lookup_book/{{ book.id }}/">{{ book.title }}</a></li>
+      {% endfor %}
+    </ul>
+    </div>
+</body>
+</html>

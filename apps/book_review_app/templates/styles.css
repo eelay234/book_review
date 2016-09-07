@@ -1,0 +1,25 @@
+.container {
+  margin: 0 auto;
+  width: 970px;
+}
+
+.hero-unit {
+  padding: 10px; /* default is 60px; */
+  background-color: #eee;
+  margin-bottom: 20px;
+}
+
+.btn-success {
+  margin-top: 10px;
+  margin-left:  110px;
+}
+
+td, th {
+  width: 180px;
+}
+
+.t_id {
+  width: 20px;
+}
+
+@media (max-width: 767px) { .hero-container { margin-right: -20px; margin-left: -20px; } }

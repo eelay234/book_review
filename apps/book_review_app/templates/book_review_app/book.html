@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>Book</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   {% load staticfiles %}
+   <link rel="stylesheet" href="{% static 'book_review_app/css/styles.css' %}">
+</head>
+<body>
+  <div class="main">
+    <a href="/logoff" class="r">Log off</a>
+    <a href="/books/" class="mr">Home</a>
+    <div class="container">
+      <h2>{{ book.title}}</h2>
+      <h2>Author: {{ book.author}}</h2>
+      <h2>Reviews</h2>
+      {% for review in reviews %}
+      <p id="stars{{ review.id}}">
+          <script>
+          var count = {{ review.rating }}
+          var s="";
+          for (var i=0; i < count; i++) {
+            s += "*";
+          }
+          document.getElementById("stars{{ review.id }}").innerHTML=s;
+          //document.write = "*";
+          </script>
+      </p>
+        <p><a href="/users/{{review.user_id.id}}/">{{ review.user_id.alias }}</a> said {{ review.message }}</p>
+        <p>{{ review.created_at }}</p>
+        {% if review.user_id.id == request.session.user_id %}
+          <a href="/delete_review/{{ review.id}}/{{ book.id }}/">delete this review</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="container add_part">
+      <h2>Add a Review</h2>
+      <form action="/post_review/{{book.id }}/" method="post">
+          {% csrf_token %}
+          <label for="review">Review</label>
+          <input type="text" name="review"><br>
+          <label for="rating">Rating</label>
+          <select name="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <br>
+          <input type="submit" class="btn btn-sm btn-success" value="submit review">
+      </form>
+    </div>
+    </div>
+  </div>
+</body>
+</html>
