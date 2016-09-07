@@ -16,10 +16,10 @@ def check_password(email, password):
           return None
       hashed = u.password
       if bcrypt.hashpw(password.encode("utf-8"), hashed.encode("utf-8")) == hashed.encode("utf-8"):
-        print "It matches"
+        # print "It matches"
         return u
       else:
-        print "It does not match"
+        # print "It does not match"
         return None
 
 def index(request):
@@ -46,15 +46,15 @@ def login(request):
         return render(request, 'book_review_app/index.html', context)
     user = check_password(email=email, password=password)
     if user != None:
-        print "after check_password:"
+        # print "after check_password:"
         request.session['user_id'] = user.id
         request.session['user_name'] = user.name
         context = {
           "reviews_first3": Review.objects.all()[:3],#User.objects.get(id=user.id)
           "review_others": Review.objects.all()[4:]
         }
-        print Review.objects.all()[:3]
-        print Review.objects.all()[4:]
+        # print Review.objects.all()[:3]
+        # print Review.objects.all()[4:]
         return render(request, 'book_review_app/books.html', context)
     else:
         context = {
@@ -111,15 +111,15 @@ def registration(request):
             passwd_encoded = password.encode('utf-8')
             hashed = bcrypt.hashpw(passwd_encoded, bcrypt.gensalt())
             user = User.objects.create(name=name, alias=alias, password=hashed, email=email)
-            print "User objects after create"
+            # print "User objects after create"
             request.session['user_id'] = user.id
             request.session['user_name'] = user.name
             context = {
               "reviews_first3": Review.objects.all().order_by('-created_at')[:3],#User.objects.get(id=user.id)
               "review_others": Review.objects.all().order_by('-created_at')[4:]
             }
-            print Review.objects.all()[:3]
-            print Review.objects.all()[4:]
+            # print Review.objects.all()[:3]
+            # print Review.objects.all()[4:]
             # return redirect("books")
             return render(request, 'book_review_app/books.html', context)
         else:
@@ -147,8 +147,8 @@ def add_book_review(request):
     u = User.objects.filter(id=request.session['user_id']).first()
     b = Book.objects.create( title=title, author=author, created_at=datetime.now(), updated_at=datetime.now())
     r = Review.objects.create(message=review, user_id=u, book_id=b, rating=rating, created_at=datetime.now(), updated_at=datetime.now())
-    print "r="
-    print r.user_id.id
+    # print "r="
+    # print r.user_id.id
     context = {
         "book": b,
         "reviews": Review.objects.filter(book_id=b)
@@ -190,8 +190,8 @@ def books(request):
       "reviews_first3": Review.objects.all().order_by('-created_at')[:3],#User.objects.get(id=user.id)
       "review_others": Review.objects.all().order_by('-created_at')[4:]
     }
-    print Review.objects.all()[:3]
-    print Review.objects.all()[4:]
+    # print Review.objects.all()[:3]
+    # print Review.objects.all()[4:]
     # u = User.objects.get(id=id)
     # b = Book.objects.filter(author=u)
     # context = {
@@ -207,16 +207,16 @@ def lookup_book(request, id):
         "book": b,
         "reviews": Review.objects.filter(book_id=b)
     }
-    print "lookup:"
-    print b.title
+    # print "lookup:"
+    # print b.title
     return render(request, 'book_review_app/book.html', context)
 
 def delete_review(request, id, book_id):
-  print id
+  # print id
   u = User.objects.get(id=request.session['user_id'])
   r = Review.objects.filter(id=id)
-  print "delete"
-  print len(r)
+  # print "delete"
+  # print len(r)
   b= Book.objects.get(id=book_id)
   r.delete()
   context = {
