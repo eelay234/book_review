@@ -1,0 +1,44 @@
+.main{
+  margin: 0 auto;
+  width: 970px;
+}
+
+.container {
+  display: inline-block;
+  width: 300px;
+  vertical-align: top;
+}
+
+.other, .first3 {
+  display: inline-block;
+  /*width: 300px;*/
+  vertical-align: top;
+}
+
+.other {
+  margin-left: 0px;
+  margin-top: 70px;
+  border: solid 1px black;
+  padding: 0 10px 10px 10px;
+}
+
+span {
+  width: 200px;
+}
+.a_mright, .a_right, .title {
+  display: inline-block;
+}
+
+.a_mright, .a_right {
+  margin-left: 30px;
+}
+
+.add_part, .user_block {
+  margin-top: 100px;
+}
+
+.mr, .r {
+  float: right;
+  margin-top: 30px;
+  margin-right:20px;
+}
